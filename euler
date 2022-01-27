@@ -1,0 +1,40 @@
+function [m,n1,suma,j]= euler(f,a,b,y0,dx)
+%{
+Joel Quintuna, Edwin Munoz
+f: funcion que representa la ecuacion diferencial (dy/dx=f)
+a,b: limites del intervalo.
+y0: condicion inicial
+dx: valor de paso (mas pequeno, mas exacta es la aproximacion)
+RESPUESTA:
+m: X,Y vectores con los valores aproximados que represental la solucion de
+la EEDD
+%}
+syms g
+X=a:dx:b;%crea los elementos segun el paso dado
+n=length(X);
+y0p=y0;
+Y=y0;%vector para guardar los valores
+for i=1:n-1
+    dy=f(y0);%se calcula el diferencial
+    y0=y0+dy*dx;%nuevo valor de yi
+    Y(i+1)=y0;% se agrega el valor al vector Y 
+end
+m=X;%retorna los vectores con los valores
+n1=Y;
+nueva=f(g);
+p=2;
+derivada=diff(nueva);
+valor=subs(derivada,g,y0p);
+suma=valor*dx^2/factorial(p);
+
+%estabilidad
+j=0;
+i=1;
+while(i<n)
+    if abs(Y(i))>1
+        j=j+1;
+    end
+    i=i+1;
+end
+
+end
