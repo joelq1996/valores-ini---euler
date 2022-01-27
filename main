@@ -1,0 +1,21 @@
+f=@(y) -2*y.^2+12*y-20;%(1/2)*(1-y);%ecuacion diferencial
+
+syms n
+s=@(x) -2*x.^2+12*x-20;%1-exp(-x/2);%solucion analitica
+a=0;%intervalos
+b=5;
+y0=0;%condicion inicial
+dx=0.5;%paso
+n1=2;
+X=a:dx:b;%vector de valores con paso dx
+[k,j,e,estabilidad]=euler(f,a,b,y0,dx);
+fprintf('error :%f\n',e);
+fprintf('Estabilidad %d\n',estabilidad);
+%Grafica
+plot(k,j,'b','lineWidth',1);
+xlabel('x');
+ylabel('y');
+axis square
+hold on
+plot(X,s(X),'k--','lineWidth',1);
+legend('Aprox. Euler','Sol.Analitica');
